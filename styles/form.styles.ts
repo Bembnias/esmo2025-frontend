@@ -20,11 +20,6 @@ export const formScreenStyles = StyleSheet.create({
     shadowOpacity: 0.1,
     shadowRadius: 4,
     elevation: 3,
-    borderWidth: 3,
-    borderLeftColor: Colors.bloodRed,
-    borderTopColor: Colors.lightBlue,
-    borderRightColor: Colors.scienceBlue,
-    borderBottomColor: Colors.bloodRed,
   },
   title: {
     fontSize: FontSizes.lg,

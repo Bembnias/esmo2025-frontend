@@ -20,11 +20,6 @@ export const finalScreenStyles = StyleSheet.create({
     shadowOpacity: 0.1,
     shadowRadius: 8,
     elevation: 5,
-    borderWidth: 3,
-    borderLeftColor: Colors.bloodRed,
-    borderTopColor: Colors.lightBlue,
-    borderRightColor: Colors.scienceBlue,
-    borderBottomColor: Colors.bloodRed,
   },
   scoreContainer: {
     backgroundColor: Colors.scienceBlue,

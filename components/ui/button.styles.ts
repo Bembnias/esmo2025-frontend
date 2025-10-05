@@ -10,6 +10,11 @@ export const buttonStyles = StyleSheet.create({
     justifyContent: 'center',
     minWidth: 200,
   },
+  buttonHero: {
+    paddingVertical: Spacing.md,
+    paddingHorizontal: Spacing.xxl,
+    minWidth: 300,
+  },
   buttonPrimary: {
     backgroundColor: Colors.bloodRed,
   },
@@ -21,6 +26,10 @@ export const buttonStyles = StyleSheet.create({
     fontSize: FontSizes.lg,
     fontWeight: '600',
     textTransform: 'uppercase',
+  },
+  buttonTextHero: {
+    fontFamily: 'DMSans_600SemiBold',
+    fontSize: FontSizes.xxl * 2,
   },
   buttonTextDisabled: {
     color: '#999',

@@ -1,6 +1,6 @@
 import { AnswerOption } from '@/components/ui/answer-option'
 import { Button } from '@/components/ui/button'
-import { Logo } from '@/components/ui/logo'
+import { CloseQuizButton } from '@/components/ui/close-quiz-button'
 import { ProgressIndicator } from '@/components/ui/progress-indicator'
 import { ScreenLayout } from '@/components/ui/screen-layout'
 import { useQuiz } from '@/contexts/quiz-context'
@@ -13,13 +13,18 @@ import { ScrollView, Text, View } from 'react-native'
 export default function QuizScreen() {
   const router = useRouter()
 
-  const { currentQuestionIndex, setCurrentQuestionIndex, addResult, setElapsedTime } = useQuiz()
+  const { currentQuestionIndex, setCurrentQuestionIndex, addResult, setElapsedTime, resetQuiz } = useQuiz()
   const [selectedAnswerId, setSelectedAnswerId] = useState<string | null>(null)
   const [isRevealed, setIsRevealed] = useState(false)
   const [startTime] = useState(Date.now())
 
   const currentQuestion = QUIZ_QUESTIONS[currentQuestionIndex]
   const isLastQuestion = currentQuestionIndex === QUIZ_QUESTIONS.length - 1
+
+  const handleResetQuiz = () => {
+    resetQuiz()
+    router.push('/')
+  }
 
   useEffect(() => {
     // Timer starts when quiz screen mounts
@@ -60,7 +65,7 @@ export default function QuizScreen() {
     <ScreenLayout>
       <ScrollView style={quizScreenStyles.container} showsVerticalScrollIndicator={false}>
         <View style={quizScreenStyles.header}>
-          <Logo />
+          <CloseQuizButton handleResetQuiz={handleResetQuiz} />
         </View>
 
         <View style={quizScreenStyles.card}>

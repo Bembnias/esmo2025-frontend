@@ -5,10 +5,11 @@ export const logoStyles = StyleSheet.create({
   container: {
     alignItems: 'center',
     marginVertical: Spacing.md,
+    paddingBottom: Spacing.xl,
   },
   logo: {
-    width: 200,
-    height: 60,
+    width: 420,
+    height: 112,
     resizeMode: 'contain',
   },
 })

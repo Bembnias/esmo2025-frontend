@@ -1,4 +1,4 @@
-import { BorderRadius, Colors, FontSizes, Spacing } from '@/constants/theme'
+import { Colors, FontSizes, Spacing } from '@/constants/theme'
 import { StyleSheet } from 'react-native'
 
 export const startScreenStyles = StyleSheet.create({
@@ -8,41 +8,29 @@ export const startScreenStyles = StyleSheet.create({
     alignItems: 'center',
     paddingHorizontal: Spacing.lg,
   },
-  card: {
-    backgroundColor: Colors.white,
-    borderRadius: BorderRadius.xl,
-    padding: Spacing.xl,
-    alignItems: 'center',
-    width: '90%',
-    maxWidth: 600,
-    shadowColor: Colors.black,
-    shadowOffset: { width: 0, height: 4 },
-    shadowOpacity: 0.1,
-    shadowRadius: 8,
-    elevation: 5,
-  },
   title: {
-    fontSize: FontSizes.xxl,
-    fontWeight: '700',
+    fontFamily: 'DMSans_700Bold',
+    fontSize: FontSizes.xxl * 2,
     color: Colors.scienceBlue,
     textAlign: 'center',
     marginBottom: Spacing.sm,
     textTransform: 'uppercase',
   },
+  separator: {
+    width: 90,
+    height: 7,
+    backgroundColor: Colors.bloodRed,
+    marginBottom: Spacing.sm,
+  },
   subtitle: {
-    fontSize: FontSizes.lg,
+    fontFamily: 'DMSans_300Light',
+    fontSize: FontSizes.xl,
     color: Colors.scienceBlue,
     textAlign: 'center',
     marginBottom: Spacing.md,
   },
-  description: {
-    fontSize: FontSizes.md,
-    color: Colors.scienceBlue,
-    textAlign: 'center',
-    marginBottom: Spacing.lg,
-  },
   highlight: {
     color: Colors.scienceBlue,
-    fontWeight: '700',
+    fontFamily: 'DMSans_700Bold',
   },
 })
