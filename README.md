@@ -1,50 +1,140 @@
-# Welcome to your Expo app 👋
+# ESMO 2025 Quiz Application
 
-This is an [Expo](https://expo.dev) project created with [`create-expo-app`](https://www.npmjs.com/package/create-expo-app).
+A React Native Expo quiz application for trade fairs, featuring a clean, modern UI with the Guardant Health branding.
 
-## Get started
+## Features
 
-1. Install dependencies
+- **Start Screen**: Welcome screen with branding and start button
+- **Quiz Flow**: 6 multiple-choice questions with:
+  - Answer selection with visual feedback
+  - Reveal button to show correct answers
+  - Progress indicator
+  - Timer tracking
+- **Contact Form**: Collects user information with validation
+  - Required fields: Name, Surname, Email, City, Country, Affiliation
+  - Optional fields: Area of Interest, Speciality, Liquid Biopsy Access
+  - Privacy consent checkboxes
+- **Results Screen**: Shows final score and time
+- **CSV Export**: Saves quiz results and form data to CSV file
 
-   ```bash
-   npm install
-   ```
+## Tech Stack
 
-2. Start the app
+- React Native with Expo SDK 54
+- Expo Router for navigation
+- React Hook Form for form validation
+- TypeScript for type safety
 
-   ```bash
-   npx expo start
-   ```
+## Getting Started
 
-In the output, you'll find options to open the app in a
+### Prerequisites
 
-- [development build](https://docs.expo.dev/develop/development-builds/introduction/)
-- [Android emulator](https://docs.expo.dev/workflow/android-studio-emulator/)
-- [iOS simulator](https://docs.expo.dev/workflow/ios-simulator/)
-- [Expo Go](https://expo.dev/go), a limited sandbox for trying out app development with Expo
+- Node.js (>= 20.19.4 recommended)
+- npm or yarn
 
-You can start developing by editing the files inside the **app** directory. This project uses [file-based routing](https://docs.expo.dev/router/introduction).
-
-## Get a fresh project
-
-When you're ready, run:
+### Installation
 
 ```bash
-npm run reset-project
+npm install
 ```
 
-This command will move the starter code to the **app-example** directory and create a blank **app** directory where you can start developing.
+### Running the App
 
-## Learn more
+#### Start the development server
 
-To learn more about developing your project with Expo, look at the following resources:
+```bash
+npm start
+```
 
-- [Expo documentation](https://docs.expo.dev/): Learn fundamentals, or go into advanced topics with our [guides](https://docs.expo.dev/guides).
-- [Learn Expo tutorial](https://docs.expo.dev/tutorial/introduction/): Follow a step-by-step tutorial where you'll create a project that runs on Android, iOS, and the web.
+Then press 'w' for web, 'i' for iOS, or 'a' for Android.
 
-## Join the community
+#### Web
 
-Join our community of developers creating universal apps.
+```bash
+npm run web
+```
 
-- [Expo on GitHub](https://github.com/expo/expo): View our open source platform and contribute.
-- [Discord community](https://chat.expo.dev): Chat with Expo users and ask questions.
+#### iOS
+
+```bash
+npm run ios
+```
+
+#### Android
+
+```bash
+npm run android
+```
+
+## Project Structure
+
+```
+app/
+  ├── _layout.tsx           # Root layout with QuizProvider
+  ├── index.tsx             # Start screen
+  ├── quiz.tsx              # Quiz questions screen
+  ├── form.tsx              # Contact form screen
+  └── final.tsx             # Results/congratulations screen
+
+components/
+  └── ui/
+      ├── button.tsx        # Reusable button component
+      ├── answer-option.tsx # Quiz answer option
+      ├── progress-indicator.tsx
+      ├── screen-layout.tsx # Layout with background
+      └── logo.tsx
+
+data/
+  └── questions.ts          # Quiz questions data
+
+contexts/
+  └── quiz-context.tsx      # Global quiz state management
+
+types/
+  └── quiz.ts               # TypeScript types
+
+constants/
+  └── theme.ts              # Colors, spacing, and style constants
+```
+
+## Color Palette
+
+- White: `#ffffff`
+- Black: `#000000`
+- Light Gray: `#edeeef`
+- Science Blue: `#005cb9`
+- Light Blue: `#1cb3e8`
+- Blood Red: `#ea1d23`
+
+## Design Principles
+
+- **KISS**: Keep It Simple, Stupid - clean, straightforward code
+- **DRY**: Don't Repeat Yourself - reusable components
+- **Separation of Concerns**: Styles in separate files using CSS variables/constants
+
+## CSV Export
+
+Quiz results are automatically saved when the user completes the form. The CSV includes:
+
+- User information (name, email, city, etc.)
+- Quiz score and time
+- Individual question responses and correctness
+
+On web, the CSV is downloaded automatically. On mobile, it's logged to console.
+
+## Customization
+
+### Changing Questions
+
+Edit `data/questions.ts` to modify quiz questions and answers.
+
+### Styling
+
+All styles use constants from `constants/theme.ts`. Modify colors, spacing, or font sizes there to update the entire app.
+
+### Branding
+
+Replace `assets/images/icon.png` with your logo and `assets/images/background.png` with your background image.
+
+## License
+
+Private project for ESMO 2025.
