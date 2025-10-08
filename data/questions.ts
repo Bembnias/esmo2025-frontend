@@ -21,22 +21,46 @@ export const QUIZ_QUESTIONS: QuizQuestion[] = [
   },
   {
     id: 2,
-    question: '2. What is the recommended sample type for NGS testing?',
+    question: '2. Which of the following statements are true?',
     answers: [
-      { id: 'A', text: 'Blood sample only', isCorrect: false },
-      { id: 'B', text: 'Tissue biopsy only', isCorrect: false },
-      { id: 'C', text: 'Either tissue or liquid biopsy', isCorrect: true },
-      { id: 'D', text: 'Saliva sample', isCorrect: false },
+      {
+        id: 'A',
+        text: 'NGS testing (tissue and liquid) has not demonstrated clinical outcomes',
+        isCorrect: false,
+      },
+      {
+        id: 'B',
+        text: 'NGS testing (tissue and liquid) demonstrated clinical benefits and large panels (CGP) equal outcomes of small panels (<50 genes) in NSCLC',
+        isCorrect: false,
+      },
+      {
+        id: 'C',
+        text: 'NGS testing (tissue and liquid) demonstrated clinical benefits and large panels (CGP) improved patients outcomes over small panels (<50 genes) in NSCLC',
+        isCorrect: true,
+      },
+      { id: 'D', text: 'All of the above', isCorrect: false },
     ],
   },
   {
     id: 3,
-    question: '3. How many genes should be included in a comprehensive NGS panel?',
+    question: '3. Liquid biopsy CGP tests such as Guardant360® CDx:',
     answers: [
-      { id: 'A', text: 'Less than 50', isCorrect: false },
-      { id: 'B', text: 'Between 50-100', isCorrect: false },
-      { id: 'C', text: 'More than 100', isCorrect: true },
-      { id: 'D', text: 'Only 10-20 key genes', isCorrect: false },
+      {
+        id: 'A',
+        text: 'Have a fast turnaround time and patient convenience',
+        isCorrect: false,
+      },
+      {
+        id: 'B',
+        text: 'Liquid biopsy can identify alterations that have developed over time in resistance to therapy or that are across different sites of disease',
+        isCorrect: false,
+      },
+      {
+        id: 'C',
+        text: 'Have a concordance with tissue above 80% in NSCLC',
+        isCorrect: false,
+      },
+      { id: 'D', text: 'All of the above', isCorrect: true },
     ],
   },
   {
@@ -52,34 +76,12 @@ export const QUIZ_QUESTIONS: QuizQuestion[] = [
   },
   {
     id: 5,
-    question: '5. What is the typical turnaround time for NGS test results?',
+    question: '5. For your patients, what would be a meaningful difference in turnaround time for a CGP test?',
     answers: [
-      { id: 'A', text: '1-3 days', isCorrect: false },
-      { id: 'B', text: '7-14 days', isCorrect: true },
-      { id: 'C', text: '30-60 days', isCorrect: false },
-      { id: 'D', text: 'Same day', isCorrect: false },
-    ],
-  },
-  {
-    id: 6,
-    question: '6. Which statement about NGS in precision oncology is most accurate?',
-    answers: [
-      {
-        id: 'A',
-        text: 'NGS should only be used for advanced stage cancers',
-        isCorrect: false,
-      },
-      {
-        id: 'B',
-        text: 'NGS can identify actionable mutations to guide treatment decisions',
-        isCorrect: true,
-      },
-      { id: 'C', text: 'NGS is only useful for research purposes', isCorrect: false },
-      {
-        id: 'D',
-        text: 'NGS cannot detect resistance mutations',
-        isCorrect: false,
-      },
+      { id: 'A', text: 'Less than 5 working days', isCorrect: true },
+      { id: 'B', text: 'Between 5 and 10 working days', isCorrect: false },
+      { id: 'C', text: 'Around 15 working days', isCorrect: false },
+      { id: 'D', text: 'Around 25 working days', isCorrect: false },
     ],
   },
 ]

@@ -5,11 +5,14 @@
 export const Colors = {
   white: '#ffffff',
   black: '#000000',
+  dataGray: '#4a5054',
   lightGray: '#edeeef',
   scienceBlue: '#005cb9',
   lightBlue: '#1cb3e8',
   bloodRed: '#ea1d23',
 }
+
+export const GRADIENT_FRAME_COLORS = [Colors.bloodRed, Colors.scienceBlue, Colors.lightBlue, Colors.bloodRed]
 
 export const Spacing = {
   xs: 8,
@@ -25,6 +28,7 @@ export const BorderRadius = {
   md: 16,
   lg: 24,
   xl: 32,
+  xxl: 40,
   full: 9999,
 }
 

@@ -7,6 +7,7 @@ export const startScreenStyles = StyleSheet.create({
     justifyContent: 'center',
     alignItems: 'center',
     paddingHorizontal: Spacing.lg,
+    // backgroundColor: Colors.white,
   },
   title: {
     fontFamily: 'DMSans_700Bold',

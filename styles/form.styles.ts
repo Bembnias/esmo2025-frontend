@@ -4,7 +4,7 @@ import { StyleSheet } from 'react-native'
 export const formScreenStyles = StyleSheet.create({
   container: {
     flex: 1,
-    paddingHorizontal: Spacing.lg,
+    paddingHorizontal: Spacing.xxl,
     paddingVertical: Spacing.xl,
   },
   header: {
@@ -12,9 +12,10 @@ export const formScreenStyles = StyleSheet.create({
     marginBottom: Spacing.md,
   },
   card: {
-    backgroundColor: Colors.white,
+    backgroundColor: Colors.lightGray,
     borderRadius: BorderRadius.xl,
-    padding: Spacing.lg,
+    paddingVertical: Spacing.lg,
+    paddingHorizontal: Spacing.xxl,
     shadowColor: Colors.black,
     shadowOffset: { width: 0, height: 2 },
     shadowOpacity: 0.1,
@@ -22,37 +23,30 @@ export const formScreenStyles = StyleSheet.create({
     elevation: 3,
   },
   title: {
-    fontSize: FontSizes.lg,
-    fontWeight: '600',
-    color: Colors.black,
+    fontSize: FontSizes.xl,
+    fontFamily: 'DMSans_700Bold',
+    color: Colors.scienceBlue,
     textAlign: 'center',
     marginBottom: Spacing.md,
   },
   row: {
     flexDirection: 'row',
     gap: Spacing.sm,
-    marginBottom: Spacing.sm,
   },
   inputContainer: {
     flex: 1,
     marginBottom: Spacing.sm,
   },
-  label: {
-    fontSize: FontSizes.sm,
-    color: Colors.black,
-    marginBottom: 4,
-  },
-  required: {
-    color: Colors.bloodRed,
-  },
   input: {
+    fontFamily: 'DMSans_400Regular',
     borderWidth: 1,
-    borderColor: Colors.lightGray,
-    borderRadius: BorderRadius.sm,
+    borderColor: Colors.dataGray,
+    borderRadius: BorderRadius.full,
     paddingVertical: Spacing.xs,
     paddingHorizontal: Spacing.sm,
     fontSize: FontSizes.md,
     backgroundColor: Colors.white,
+    color: Colors.scienceBlue,
   },
   inputError: {
     borderColor: Colors.bloodRed,
@@ -68,28 +62,35 @@ export const formScreenStyles = StyleSheet.create({
     marginBottom: Spacing.sm,
   },
   checkbox: {
-    width: 20,
-    height: 20,
-    borderWidth: 2,
-    borderColor: Colors.lightGray,
+    width: 18,
+    height: 18,
+    borderWidth: 1,
+    borderColor: Colors.dataGray,
     borderRadius: 4,
     marginRight: Spacing.xs,
-    marginTop: 2,
+    marginTop: -3,
     justifyContent: 'center',
     alignItems: 'center',
+    backgroundColor: Colors.white,
   },
   checkboxChecked: {
     backgroundColor: Colors.scienceBlue,
     borderColor: Colors.scienceBlue,
   },
   checkboxLabel: {
+    fontFamily: 'DMSans_200ExtraLight_Italic',
     flex: 1,
     fontSize: FontSizes.sm,
     color: Colors.black,
-    lineHeight: 18,
+    lineHeight: 14,
   },
   footer: {
     alignItems: 'center',
     marginTop: Spacing.md,
   },
+  buttonContainer: {
+    alignItems: 'center',
+    marginTop: Spacing.sm,
+  },
+  floatingButton: { position: 'absolute', top: 40, right: 52, zIndex: 10 },
 })

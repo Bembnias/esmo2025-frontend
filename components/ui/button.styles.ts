@@ -17,9 +17,19 @@ export const buttonStyles = StyleSheet.create({
   },
   buttonPrimary: {
     backgroundColor: Colors.bloodRed,
+    borderColor: Colors.bloodRed,
+    borderWidth: 4,
+  },
+  buttonOutlined: {
+    backgroundColor: 'transparent',
+    borderColor: Colors.bloodRed,
+    borderWidth: 4,
   },
   buttonDisabled: {
-    backgroundColor: Colors.lightGray,
+    color: Colors.lightGray,
+    backgroundColor: Colors.white,
+    borderColor: Colors.lightGray,
+    borderWidth: 4,
   },
   buttonText: {
     color: Colors.white,
@@ -31,7 +41,10 @@ export const buttonStyles = StyleSheet.create({
     fontFamily: 'DMSans_600SemiBold',
     fontSize: FontSizes.xxl * 2,
   },
+  buttonTextOutlined: {
+    color: Colors.bloodRed,
+  },
   buttonTextDisabled: {
-    color: '#999',
+    color: Colors.lightGray,
   },
 })

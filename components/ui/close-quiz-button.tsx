@@ -1,7 +1,16 @@
+import { useQuiz } from '@/contexts/quiz-context'
+import { useRouter } from 'expo-router'
 import React, { useRef } from 'react'
 import { Image, StyleSheet, TouchableOpacity } from 'react-native'
 
-export const CloseQuizButton = ({ handleResetQuiz }: { handleResetQuiz: () => void }) => {
+export const CloseQuizButton = () => {
+  const router = useRouter()
+  const { resetQuiz } = useQuiz()
+  const handleResetQuiz = () => {
+    resetQuiz()
+    router.push('/')
+  }
+
   const holdTimeout = useRef<number | null>(null)
 
   const handlePressIn = () => {
@@ -18,16 +27,12 @@ export const CloseQuizButton = ({ handleResetQuiz }: { handleResetQuiz: () => vo
   }
 
   return (
-    <TouchableOpacity style={styles.button} onPressIn={handlePressIn} onPressOut={handlePressOut} activeOpacity={0.7}>
+    <TouchableOpacity onPressIn={handlePressIn} onPressOut={handlePressOut} activeOpacity={0.7}>
       <Image source={require('@/assets/images/close-icon.png')} style={styles.image} />
     </TouchableOpacity>
   )
 }
 
 const styles = StyleSheet.create({
-  button: {
-    paddingVertical: 14,
-    paddingHorizontal: 24,
-  },
   image: { width: 60, height: 60 },
 })

@@ -33,23 +33,18 @@ export const AnswerOption: React.FC<AnswerOptionProps> = ({ answer, isSelected, 
     if (!isRevealed) return null
 
     if (answer.isCorrect) {
-      return (
-        <View style={answerOptionStyles.iconContainer}>
-          <Ionicons name='checkmark' size={24} color={Colors.white} />
-        </View>
-      )
+      return <Ionicons name='checkmark' size={40.5} color={Colors.white} />
     }
 
     if (isSelected && !answer.isCorrect) {
-      return (
-        <View style={answerOptionStyles.iconContainer}>
-          <Ionicons name='close' size={24} color={Colors.white} />
-        </View>
-      )
+      return <Ionicons name='close' size={40.5} color={Colors.white} />
     }
 
     return null
   }
+
+  const shouldShowIcon = isRevealed && (answer.isCorrect || isSelected)
+  const shouldUseRevealedStyle = isRevealed && (answer.isCorrect || isSelected)
 
   return (
     <TouchableOpacity
@@ -58,13 +53,20 @@ export const AnswerOption: React.FC<AnswerOptionProps> = ({ answer, isSelected, 
       disabled={disabled}
       activeOpacity={0.7}
     >
-      <Text style={[answerOptionStyles.optionLabel, isRevealed && answerOptionStyles.optionLabelRevealed]}>
-        {answer.id}.
-      </Text>
-      <Text style={[answerOptionStyles.optionText, isRevealed && answerOptionStyles.optionTextRevealed]}>
+      <View style={answerOptionStyles.labelContainer}>
+        {shouldShowIcon ? (
+          renderIcon()
+        ) : (
+          <Text
+            style={[answerOptionStyles.optionLabel, shouldUseRevealedStyle && answerOptionStyles.optionLabelRevealed]}
+          >
+            {answer.id}.
+          </Text>
+        )}
+      </View>
+      <Text style={[answerOptionStyles.optionText, shouldUseRevealedStyle && answerOptionStyles.optionTextRevealed]}>
         {answer.text}
       </Text>
-      {renderIcon()}
     </TouchableOpacity>
   )
 }

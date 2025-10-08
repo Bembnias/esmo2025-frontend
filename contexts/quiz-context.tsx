@@ -10,8 +10,13 @@ interface QuizContextType {
   setFormData: (data: FormData) => void
   elapsedTime: number
   setElapsedTime: (time: number) => void
+  wordSearchCompleted: boolean
+  setWordSearchCompleted: (completed: boolean) => void
+  foundWords: string[]
+  setFoundWords: (words: string[]) => void
   resetQuiz: () => void
   score: number
+  totalScore: number
 }
 
 const QuizContext = createContext<QuizContextType | undefined>(undefined)
@@ -21,6 +26,8 @@ export const QuizProvider: React.FC<{ children: ReactNode }> = ({ children }) =>
   const [results, setResults] = useState<QuizResult[]>([])
   const [formData, setFormData] = useState<FormData | null>(null)
   const [elapsedTime, setElapsedTime] = useState(0)
+  const [wordSearchCompleted, setWordSearchCompleted] = useState(false)
+  const [foundWords, setFoundWords] = useState<string[]>([])
 
   const addResult = (result: QuizResult) => {
     setResults((prev) => [...prev, result])
@@ -31,9 +38,12 @@ export const QuizProvider: React.FC<{ children: ReactNode }> = ({ children }) =>
     setResults([])
     setFormData(null)
     setElapsedTime(0)
+    setWordSearchCompleted(false)
+    setFoundWords([])
   }
 
   const score = results.filter((r) => r.isCorrect).length
+  const totalScore = score + (wordSearchCompleted ? 1 : 0)
 
   return (
     <QuizContext.Provider
@@ -46,8 +56,13 @@ export const QuizProvider: React.FC<{ children: ReactNode }> = ({ children }) =>
         setFormData,
         elapsedTime,
         setElapsedTime,
+        wordSearchCompleted,
+        setWordSearchCompleted,
+        foundWords,
+        setFoundWords,
         resetQuiz,
         score,
+        totalScore,
       }}
     >
       {children}

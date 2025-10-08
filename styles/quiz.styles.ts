@@ -2,9 +2,12 @@ import { Colors, FontSizes, Spacing } from '@/constants/theme'
 import { StyleSheet } from 'react-native'
 
 export const quizScreenStyles = StyleSheet.create({
+  wrapper: {
+    flex: 1,
+  },
   container: {
     flex: 1,
-    paddingHorizontal: Spacing.lg,
+    paddingHorizontal: Spacing.xl,
     paddingVertical: Spacing.xl,
   },
   header: {
@@ -15,20 +18,22 @@ export const quizScreenStyles = StyleSheet.create({
     marginBottom: Spacing.md,
   },
   questionText: {
-    fontSize: FontSizes.lg,
-    fontWeight: '600',
-    color: Colors.white,
+    fontFamily: 'DMSans_600SemiBold',
+    fontSize: FontSizes.xxl,
+    color: Colors.scienceBlue,
     marginBottom: Spacing.md,
-    lineHeight: 26,
   },
   answersContainer: {
     marginBottom: Spacing.md,
   },
   footer: {
+    flexDirection: 'row',
     alignItems: 'center',
-    marginTop: 'auto',
+    justifyContent: 'space-between',
+    paddingHorizontal: Spacing.xl,
+    paddingVertical: Spacing.md,
   },
-  progressContainer: {
-    marginBottom: Spacing.md,
+  footerSpacer: {
+    width: 200,
   },
 })

@@ -6,25 +6,21 @@ import { ScreenLayout } from '@/components/ui/screen-layout'
 import { useQuiz } from '@/contexts/quiz-context'
 import { QUIZ_QUESTIONS } from '@/data/questions'
 import { quizScreenStyles } from '@/styles/quiz.styles'
-import { useRouter } from 'expo-router'
+import { Href, useRouter } from 'expo-router'
 import React, { useEffect, useState } from 'react'
 import { ScrollView, Text, View } from 'react-native'
+import Animated, { FadeInRight, FadeOutLeft } from 'react-native-reanimated'
 
 export default function QuizScreen() {
   const router = useRouter()
 
-  const { currentQuestionIndex, setCurrentQuestionIndex, addResult, setElapsedTime, resetQuiz } = useQuiz()
+  const { currentQuestionIndex, setCurrentQuestionIndex, addResult, setElapsedTime } = useQuiz()
   const [selectedAnswerId, setSelectedAnswerId] = useState<string | null>(null)
   const [isRevealed, setIsRevealed] = useState(false)
   const [startTime] = useState(Date.now())
 
   const currentQuestion = QUIZ_QUESTIONS[currentQuestionIndex]
   const isLastQuestion = currentQuestionIndex === QUIZ_QUESTIONS.length - 1
-
-  const handleResetQuiz = () => {
-    resetQuiz()
-    router.push('/')
-  }
 
   useEffect(() => {
     // Timer starts when quiz screen mounts
@@ -53,7 +49,7 @@ export default function QuizScreen() {
     if (isLastQuestion) {
       const elapsed = Math.floor((Date.now() - startTime) / 1000)
       setElapsedTime(elapsed)
-      router.push('/form')
+      router.push('/word-search' as Href)
     } else {
       setCurrentQuestionIndex(currentQuestionIndex + 1)
       setSelectedAnswerId(null)
@@ -63,40 +59,46 @@ export default function QuizScreen() {
 
   return (
     <ScreenLayout>
-      <ScrollView style={quizScreenStyles.container} showsVerticalScrollIndicator={false}>
-        <View style={quizScreenStyles.header}>
-          <CloseQuizButton handleResetQuiz={handleResetQuiz} />
-        </View>
-
-        <View style={quizScreenStyles.card}>
-          <Text style={quizScreenStyles.questionText}>{currentQuestion.question}</Text>
-
-          <View style={quizScreenStyles.answersContainer}>
-            {currentQuestion.answers.map((answer) => (
-              <AnswerOption
-                key={answer.id}
-                answer={answer}
-                isSelected={selectedAnswerId === answer.id}
-                isRevealed={isRevealed}
-                onSelect={() => !isRevealed && setSelectedAnswerId(answer.id)}
-                disabled={isRevealed}
-              />
-            ))}
+      <View style={quizScreenStyles.wrapper}>
+        <ScrollView style={quizScreenStyles.container} showsVerticalScrollIndicator={false}>
+          <View style={quizScreenStyles.header}>
+            <CloseQuizButton />
           </View>
-        </View>
+
+          <Animated.View
+            key={currentQuestion.id}
+            entering={FadeInRight.duration(300)}
+            exiting={FadeOutLeft.duration(300)}
+            style={quizScreenStyles.card}
+          >
+            <Text style={quizScreenStyles.questionText}>{currentQuestion.question}</Text>
+
+            <View style={quizScreenStyles.answersContainer}>
+              {currentQuestion.answers.map((answer) => (
+                <AnswerOption
+                  key={answer.id}
+                  answer={answer}
+                  isSelected={selectedAnswerId === answer.id}
+                  isRevealed={isRevealed}
+                  onSelect={() => !isRevealed && setSelectedAnswerId(answer.id)}
+                  disabled={isRevealed}
+                />
+              ))}
+            </View>
+          </Animated.View>
+        </ScrollView>
 
         <View style={quizScreenStyles.footer}>
-          <View style={quizScreenStyles.progressContainer}>
-            <ProgressIndicator total={QUIZ_QUESTIONS.length} current={currentQuestionIndex} />
-          </View>
+          <View style={quizScreenStyles.footerSpacer} />
+          <ProgressIndicator total={QUIZ_QUESTIONS.length + 1} current={currentQuestionIndex} />
 
           {!isRevealed ? (
-            <Button onPress={handleReveal} title='REVEAL' disabled={!selectedAnswerId} />
+            <Button onPress={handleReveal} title='REVEAL' variant='outlined' disabled={!selectedAnswerId} />
           ) : (
             <Button onPress={handleNext} title={isLastQuestion ? 'FINISH' : 'NEXT'} />
           )}
         </View>
-      </ScrollView>
+      </View>
     </ScreenLayout>
   )
 }

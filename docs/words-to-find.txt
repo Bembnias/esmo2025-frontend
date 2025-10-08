@@ -1,0 +1,13 @@
+horizontally:
+1. ROS1
+2. KRASG12C
+3. NTRK
+4. ERBB2
+
+vertically:
+1. NRG1
+2. ALK
+3. EGFR
+4. RET
+5. BRAFV600E
+6. MET

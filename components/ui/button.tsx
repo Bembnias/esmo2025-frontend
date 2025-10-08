@@ -6,7 +6,7 @@ interface ButtonProps {
   onPress: () => void
   title: string
   disabled?: boolean
-  variant?: 'default' | 'hero'
+  variant?: 'default' | 'hero' | 'outlined'
 }
 
 export const Button: React.FC<ButtonProps> = ({ onPress, title, disabled = false, variant = 'default' }) => {
@@ -15,7 +15,11 @@ export const Button: React.FC<ButtonProps> = ({ onPress, title, disabled = false
       style={[
         buttonStyles.button,
         variant === 'hero' && buttonStyles.buttonHero,
-        disabled ? buttonStyles.buttonDisabled : buttonStyles.buttonPrimary,
+        disabled
+          ? buttonStyles.buttonDisabled
+          : variant === 'outlined'
+          ? buttonStyles.buttonOutlined
+          : buttonStyles.buttonPrimary,
       ]}
       onPress={onPress}
       disabled={disabled}
@@ -25,6 +29,7 @@ export const Button: React.FC<ButtonProps> = ({ onPress, title, disabled = false
         style={[
           buttonStyles.buttonText,
           variant === 'hero' && buttonStyles.buttonTextHero,
+          variant === 'outlined' && buttonStyles.buttonTextOutlined,
           disabled && buttonStyles.buttonTextDisabled,
         ]}
       >

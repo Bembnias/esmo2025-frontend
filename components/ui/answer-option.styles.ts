@@ -6,7 +6,7 @@ export const answerOptionStyles = StyleSheet.create({
     flexDirection: 'row',
     alignItems: 'center',
     backgroundColor: Colors.lightGray,
-    padding: Spacing.md,
+    padding: Spacing.sm,
     borderRadius: BorderRadius.full,
     marginBottom: Spacing.sm,
     borderWidth: 3,
@@ -26,24 +26,29 @@ export const answerOptionStyles = StyleSheet.create({
     backgroundColor: Colors.bloodRed,
   },
   optionLabel: {
-    fontSize: FontSizes.lg,
-    fontWeight: '700',
+    fontSize: FontSizes.xxl,
+    fontFamily: 'DMSans_700Bold',
     color: Colors.scienceBlue,
     marginRight: Spacing.sm,
+    marginLeft: Spacing.xs,
     minWidth: 30,
   },
   optionLabelRevealed: {
     color: Colors.white,
   },
+  labelContainer: {
+    marginRight: Spacing.sm,
+    marginLeft: Spacing.xs,
+    minWidth: 30,
+    alignItems: 'center',
+  },
   optionText: {
-    fontSize: FontSizes.md,
-    color: Colors.black,
+    fontSize: FontSizes.lg,
+    fontFamily: 'DMSans_300Light',
+    color: Colors.scienceBlue,
     flex: 1,
   },
   optionTextRevealed: {
     color: Colors.white,
-  },
-  iconContainer: {
-    marginLeft: Spacing.sm,
   },
 })

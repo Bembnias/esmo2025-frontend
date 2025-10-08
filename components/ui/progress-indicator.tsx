@@ -11,14 +11,20 @@ export const ProgressIndicator: React.FC<ProgressIndicatorProps> = ({ total, cur
   return (
     <View style={progressIndicatorStyles.container}>
       {Array.from({ length: total }).map((_, index) => (
-        <View
-          key={index}
-          style={[
-            progressIndicatorStyles.dot,
-            index < current && progressIndicatorStyles.dotCompleted,
-            index === current && progressIndicatorStyles.dotActive,
-          ]}
-        />
+        <React.Fragment key={index}>
+          <View
+            style={[
+              progressIndicatorStyles.dot,
+              index < current && progressIndicatorStyles.dotCompleted,
+              index === current && progressIndicatorStyles.dotActive,
+            ]}
+          />
+          {index < total - 1 && (
+            <View
+              style={[progressIndicatorStyles.connector, index < current && progressIndicatorStyles.connectorCompleted]}
+            />
+          )}
+        </React.Fragment>
       ))}
     </View>
   )
