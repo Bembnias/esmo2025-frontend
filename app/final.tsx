@@ -78,7 +78,7 @@ export default function FinalScreen() {
 
           <Text style={finalScreenStyles.description}>
             You have completed the quiz and helped{'\n'}
-            <Text style={finalScreenStyles.highlight}>contribute XY $ to [Name of Charity]</Text>.
+            <Text style={finalScreenStyles.highlight}>contribute a donation to World CUP Alliance</Text>.
           </Text>
 
           {isPerfectScore ? (
