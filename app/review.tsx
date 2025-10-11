@@ -33,10 +33,10 @@ export default function ReviewScreen() {
 
   const getImageHeight = (questionId: number) => {
     const heights = {
-      1: 720,
+      1: 610,
       2: 500,
-      3: 1700,
-      4: 660,
+      3: 1650,
+      4: 610,
       5: 720,
     }
     return heights[questionId as keyof typeof heights]
@@ -63,7 +63,14 @@ export default function ReviewScreen() {
 
             return (
               <View key={question.id} style={reviewScreenStyles.questionContainer}>
-                <Text style={reviewScreenStyles.questionTitle}>{question.question}</Text>
+                <Text style={reviewScreenStyles.questionTitle}>
+                  {question.question.split('EGFR').map((part, index, array) => (
+                    <React.Fragment key={index}>
+                      {part}
+                      {index < array.length - 1 && <Text style={reviewScreenStyles.egfrText}>EGFR</Text>}
+                    </React.Fragment>
+                  ))}
+                </Text>
 
                 <TouchableOpacity
                   style={[
@@ -107,7 +114,10 @@ export default function ReviewScreen() {
                     <View style={reviewScreenStyles.explanationContainer}>
                       <Image
                         source={getExplanationImage(question.id)}
-                        style={[reviewScreenStyles.explanationImage, { height: getImageHeight(question.id) }]}
+                        style={[
+                          reviewScreenStyles.explanationImage,
+                          { height: getImageHeight(question.id), marginTop: question.id === 3 || 4 ? -30 : 0 },
+                        ]}
                       />
                     </View>
                   </View>

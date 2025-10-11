@@ -1,5 +1,5 @@
 import { FormData, QuizResult } from '@/types/quiz'
-import React, { createContext, ReactNode, useContext, useState } from 'react'
+import React, { createContext, ReactNode, useContext, useEffect, useRef, useState } from 'react'
 
 interface QuizContextType {
   currentQuestionIndex: number
@@ -10,6 +10,7 @@ interface QuizContextType {
   setFormData: (data: FormData) => void
   elapsedTime: number
   setElapsedTime: (time: number) => void
+  addElapsedTime: (time: number) => void
   wordSearchCompleted: boolean
   setWordSearchCompleted: (completed: boolean) => void
   foundWords: string[]
@@ -17,6 +18,8 @@ interface QuizContextType {
   resetQuiz: () => void
   score: number
   totalScore: number
+  startTimer: () => void
+  stopTimer: () => void
 }
 
 const QuizContext = createContext<QuizContextType | undefined>(undefined)
@@ -29,11 +32,33 @@ export const QuizProvider: React.FC<{ children: ReactNode }> = ({ children }) =>
   const [wordSearchCompleted, setWordSearchCompleted] = useState(false)
   const [foundWords, setFoundWords] = useState<string[]>([])
 
+  const timerInterval = useRef<number | null>(null)
+
+  const startTimer = () => {
+    if (timerInterval.current) return // Already running
+
+    timerInterval.current = setInterval(() => {
+      setElapsedTime((prev) => prev + 1)
+    }, 1000)
+  }
+
+  const stopTimer = () => {
+    if (timerInterval.current) {
+      clearInterval(timerInterval.current)
+      timerInterval.current = null
+    }
+  }
+
   const addResult = (result: QuizResult) => {
     setResults((prev) => [...prev, result])
   }
 
+  const addElapsedTime = (time: number) => {
+    setElapsedTime((prev) => prev + time)
+  }
+
   const resetQuiz = () => {
+    stopTimer()
     setCurrentQuestionIndex(0)
     setResults([])
     setFormData(null)
@@ -44,6 +69,13 @@ export const QuizProvider: React.FC<{ children: ReactNode }> = ({ children }) =>
 
   const score = results.filter((r) => r.isCorrect).length
   const totalScore = score + (wordSearchCompleted ? 1 : 0)
+
+  // Cleanup on unmount
+  useEffect(() => {
+    return () => {
+      stopTimer()
+    }
+  }, [])
 
   return (
     <QuizContext.Provider
@@ -56,6 +88,7 @@ export const QuizProvider: React.FC<{ children: ReactNode }> = ({ children }) =>
         setFormData,
         elapsedTime,
         setElapsedTime,
+        addElapsedTime,
         wordSearchCompleted,
         setWordSearchCompleted,
         foundWords,
@@ -63,6 +96,8 @@ export const QuizProvider: React.FC<{ children: ReactNode }> = ({ children }) =>
         resetQuiz,
         score,
         totalScore,
+        startTimer,
+        stopTimer,
       }}
     >
       {children}

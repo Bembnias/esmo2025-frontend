@@ -67,7 +67,7 @@ export const reviewScreenStyles = StyleSheet.create({
   answerContent: {
     backgroundColor: Colors.white,
     borderColor: Colors.lightGray,
-    borderWidth: 8,
+    borderWidth: 10,
     gap: Spacing.sm,
     borderRadius: BorderRadius.xl,
     marginTop: -Spacing.xl - 4,
@@ -102,6 +102,7 @@ export const reviewScreenStyles = StyleSheet.create({
   },
   explanationContainer: {
     backgroundColor: Colors.white,
+    borderRadius: BorderRadius.xl,
   },
   explanationImage: {
     width: '100%',
@@ -130,5 +131,8 @@ export const reviewScreenStyles = StyleSheet.create({
     width: '100%',
     backgroundColor: Colors.white,
     paddingTop: Spacing.md,
+  },
+  egfrText: {
+    fontFamily: 'DMSans_700Bold_Italic',
   },
 })

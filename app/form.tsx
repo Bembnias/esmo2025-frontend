@@ -7,10 +7,10 @@ import { Colors } from '@/constants/theme'
 import { useQuiz } from '@/contexts/quiz-context'
 import { FormData } from '@/types/quiz'
 import { Ionicons } from '@expo/vector-icons'
-import { router } from 'expo-router'
-import React from 'react'
+import { Link, router } from 'expo-router'
+import React, { useEffect, useRef, useState } from 'react'
 import { Controller, useForm } from 'react-hook-form'
-import { ScrollView, Text, TextInput, TouchableOpacity, View } from 'react-native'
+import { Keyboard, ScrollView, Text, TextInput, TouchableOpacity, View } from 'react-native'
 import { formScreenStyles } from '../styles/form.styles'
 
 const SPECIALITY_OPTIONS = [
@@ -27,6 +27,10 @@ const LIQUID_BIOPSY_OPTIONS = ['Yes', 'No']
 
 export default function FormScreen() {
   const { setFormData } = useQuiz()
+  const scrollViewRef = useRef<ScrollView>(null)
+  const scrollOffsetY = useRef(0)
+  const [isKeyboardVisible, setKeyboardVisible] = useState(false)
+
   const {
     control,
     handleSubmit,
@@ -48,32 +52,84 @@ export default function FormScreen() {
     },
   })
 
+  useEffect(() => {
+    const keyboardDidShowListener = Keyboard.addListener('keyboardDidShow', () => {
+      setKeyboardVisible(true)
+    })
+    const keyboardDidHideListener = Keyboard.addListener('keyboardDidHide', () => {
+      setKeyboardVisible(false)
+    })
+
+    return () => {
+      keyboardDidShowListener.remove()
+      keyboardDidHideListener.remove()
+    }
+  }, [])
+
   // Watch required fields
   const formValues = watch()
   const isFormValid =
-    !!formValues.name &&
-    !!formValues.surname &&
-    !!formValues.email &&
-    !!formValues.city &&
-    !!formValues.country &&
-    !!formValues.affiliation &&
+    !!formValues.name?.trim() &&
+    !!formValues.surname?.trim() &&
+    !!formValues.email?.trim() &&
+    !!formValues.city?.trim() &&
+    !!formValues.country?.trim() &&
+    !!formValues.affiliation?.trim() &&
     !!formValues.liquidBiopsyAccess &&
     !!formValues.privacyConsent &&
     !errors.email // Check email is valid
 
   const onSubmit = (data: FormData) => {
-    setFormData(data)
+    // Trim all text fields before submitting
+    const trimmedData: FormData = {
+      ...data,
+      name: data.name.trim(),
+      surname: data.surname.trim(),
+      email: data.email.trim(),
+      city: data.city.trim(),
+      country: data.country.trim(),
+      affiliation: data.affiliation.trim(),
+      areaOfInterest: data.areaOfInterest?.trim() || '',
+    }
+    setFormData(trimmedData)
     router.push('/final')
+  }
+
+  const scrollToInput = (inputRef: any) => {
+    setTimeout(() => {
+      inputRef?.measureInWindow((_x: number, y: number, _width: number, _height: number) => {
+        // Calculate how much to scroll
+        // y is the absolute position on screen
+        // We want to scroll so the input is visible with some offset from top
+        const keyboardOffset = 250
+        const targetScrollY = scrollOffsetY.current + y - keyboardOffset
+
+        scrollViewRef.current?.scrollTo({
+          y: Math.max(0, targetScrollY),
+          animated: true,
+        })
+      })
+    }, 300)
   }
 
   return (
     <ScreenLayout>
-      <View style={formScreenStyles.floatingButton}>
-        <CloseQuizButton />
-      </View>
-      <ScrollView style={formScreenStyles.container} showsVerticalScrollIndicator={false}>
+      <ScrollView
+        ref={scrollViewRef}
+        style={formScreenStyles.container}
+        showsVerticalScrollIndicator={false}
+        keyboardShouldPersistTaps='handled'
+        contentContainerStyle={{ paddingBottom: isKeyboardVisible ? 500 : 0 }}
+        onScroll={(event) => {
+          scrollOffsetY.current = event.nativeEvent.contentOffset.y
+        }}
+        scrollEventThrottle={16}
+      >
         <View style={formScreenStyles.header}>
           <Logo />
+        </View>
+        <View style={formScreenStyles.floatingButton}>
+          <CloseQuizButton />
         </View>
 
         <View style={formScreenStyles.card}>
@@ -84,13 +140,17 @@ export default function FormScreen() {
               <Controller
                 control={control}
                 name='name'
-                rules={{ required: 'Name is required' }}
+                rules={{
+                  required: 'Name is required',
+                  validate: (value) => value.trim().length > 0 || 'Name cannot be empty',
+                }}
                 render={({ field: { onChange, value } }) => (
                   <TextInput
                     style={[formScreenStyles.input, errors.name && formScreenStyles.inputError]}
                     placeholder='Name'
                     value={value}
                     onChangeText={onChange}
+                    onFocus={(e) => scrollToInput(e.currentTarget)}
                   />
                 )}
               />
@@ -101,13 +161,17 @@ export default function FormScreen() {
               <Controller
                 control={control}
                 name='surname'
-                rules={{ required: 'Surname is required' }}
+                rules={{
+                  required: 'Surname is required',
+                  validate: (value) => value.trim().length > 0 || 'Surname cannot be empty',
+                }}
                 render={({ field: { onChange, value } }) => (
                   <TextInput
                     style={[formScreenStyles.input, errors.surname && formScreenStyles.inputError]}
                     placeholder='Surname'
                     value={value}
                     onChangeText={onChange}
+                    onFocus={(e) => scrollToInput(e.currentTarget)}
                   />
                 )}
               />
@@ -121,6 +185,7 @@ export default function FormScreen() {
               name='email'
               rules={{
                 required: 'Email is required',
+                validate: (value) => value.trim().length > 0 || 'Email cannot be empty',
                 pattern: {
                   value: /^[A-Z0-9._%+-]+@[A-Z0-9.-]+\.[A-Z]{2,}$/i,
                   message: 'Invalid email address',
@@ -134,6 +199,7 @@ export default function FormScreen() {
                   onChangeText={onChange}
                   keyboardType='email-address'
                   autoCapitalize='none'
+                  onFocus={(e) => scrollToInput(e.currentTarget)}
                 />
               )}
             />
@@ -145,13 +211,17 @@ export default function FormScreen() {
               <Controller
                 control={control}
                 name='city'
-                rules={{ required: 'City is required' }}
+                rules={{
+                  required: 'City is required',
+                  validate: (value) => value.trim().length > 0 || 'City cannot be empty',
+                }}
                 render={({ field: { onChange, value } }) => (
                   <TextInput
                     style={[formScreenStyles.input, errors.city && formScreenStyles.inputError]}
                     placeholder='City'
                     value={value}
                     onChangeText={onChange}
+                    onFocus={(e) => scrollToInput(e.currentTarget)}
                   />
                 )}
               />
@@ -162,13 +232,17 @@ export default function FormScreen() {
               <Controller
                 control={control}
                 name='country'
-                rules={{ required: 'Country is required' }}
+                rules={{
+                  required: 'Country is required',
+                  validate: (value) => value.trim().length > 0 || 'Country cannot be empty',
+                }}
                 render={({ field: { onChange, value } }) => (
                   <TextInput
                     style={[formScreenStyles.input, errors.country && formScreenStyles.inputError]}
                     placeholder='Country'
                     value={value}
                     onChangeText={onChange}
+                    onFocus={(e) => scrollToInput(e.currentTarget)}
                   />
                 )}
               />
@@ -181,13 +255,17 @@ export default function FormScreen() {
               <Controller
                 control={control}
                 name='affiliation'
-                rules={{ required: 'Affiliation is required' }}
+                rules={{
+                  required: 'Affiliation is required',
+                  validate: (value) => value.trim().length > 0 || 'Affiliation cannot be empty',
+                }}
                 render={({ field: { onChange, value } }) => (
                   <TextInput
                     style={[formScreenStyles.input, errors.affiliation && formScreenStyles.inputError]}
                     placeholder='Affiliation'
                     value={value}
                     onChangeText={onChange}
+                    onFocus={(e) => scrollToInput(e.currentTarget)}
                   />
                 )}
               />
@@ -204,6 +282,7 @@ export default function FormScreen() {
                     placeholder='Area of interest*'
                     value={value}
                     onChangeText={onChange}
+                    onFocus={(e) => scrollToInput(e.currentTarget)}
                   />
                 )}
               />
@@ -258,7 +337,14 @@ export default function FormScreen() {
                 </View>
                 <Text style={formScreenStyles.checkboxLabel}>
                   By submitting your survey responses, you acknowledge that your personal data and survey responses will
-                  be processed by Guardant Health in accordance with its Privacy Policy.
+                  be processed by Guardant Health in accordance with its{' '}
+                  <Link
+                    style={{ textDecorationLine: 'underline' }}
+                    href='https://guardanthealth.com/contact/privacy-policy/'
+                  >
+                    Privacy Policy
+                  </Link>
+                  .
                 </Text>
               </TouchableOpacity>
             )}
@@ -276,15 +362,27 @@ export default function FormScreen() {
                 <Text style={formScreenStyles.checkboxLabel}>
                   By checking this box, you agree that Guardant Health may send you educational and/or promotional
                   materials at the email address you provided. You can opt-out of these emails at any time using the
-                  link provided therein or by submitting a request here. For more information about how we will use your
-                  personal data for this purpose, please see our Privacy Policy.
-                  <Text>*</Text>
+                  link provided therein or{' '}
+                  <Link
+                    style={{ textDecorationLine: 'underline' }}
+                    href='https://guardanthealth.com/your-privacy-choices/'
+                  >
+                    by submitting a request here.
+                  </Link>{' '}
+                  For more information about how we will use your personal data for this purpose, please see our{' '}
+                  <Link
+                    style={{ textDecorationLine: 'underline' }}
+                    href='https://guardanthealth.com/contact/privacy-policy/'
+                  >
+                    Privacy Policy
+                  </Link>
+                  .<Text> *</Text>
                 </Text>
               </TouchableOpacity>
             )}
           />
 
-          <Text style={{ marginLeft: 24 }}>* optional</Text>
+          <Text style={formScreenStyles.optional}>* optional</Text>
         </View>
         <View style={formScreenStyles.buttonContainer}>
           <Button disabled={!isFormValid} onPress={handleSubmit(onSubmit)} title='CONFIRM' />

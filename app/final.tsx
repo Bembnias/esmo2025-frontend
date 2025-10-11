@@ -68,7 +68,7 @@ export default function FinalScreen() {
             </Text>
           </View>
 
-          <Text style={finalScreenStyles.title}>Congratulations!</Text>
+          <Text style={finalScreenStyles.title}>{totalScore < 3 ? 'Thank you!' : 'Congratulations!'}</Text>
 
           <Text style={finalScreenStyles.time}>
             YOUR TIME: <Text style={finalScreenStyles.timeValue}>{formatTime(elapsedTime)}</Text>

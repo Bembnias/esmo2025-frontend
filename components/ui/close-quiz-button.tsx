@@ -1,10 +1,13 @@
+import { Colors } from '@/constants/theme'
 import { useQuiz } from '@/contexts/quiz-context'
-import { useRouter } from 'expo-router'
+import { usePathname, useRouter } from 'expo-router'
 import React, { useRef } from 'react'
-import { Image, StyleSheet, TouchableOpacity } from 'react-native'
+import { Image, StyleSheet, TouchableOpacity, View } from 'react-native'
+import { QuizTimer } from './quiz-timer'
 
 export const CloseQuizButton = () => {
   const router = useRouter()
+  const pathName = usePathname()
   const { resetQuiz } = useQuiz()
   const handleResetQuiz = () => {
     resetQuiz()
@@ -16,7 +19,7 @@ export const CloseQuizButton = () => {
   const handlePressIn = () => {
     holdTimeout.current = window.setTimeout(() => {
       handleResetQuiz()
-    }, 2000)
+    }, 800)
   }
 
   const handlePressOut = () => {
@@ -27,12 +30,21 @@ export const CloseQuizButton = () => {
   }
 
   return (
-    <TouchableOpacity onPressIn={handlePressIn} onPressOut={handlePressOut} activeOpacity={0.7}>
-      <Image source={require('@/assets/images/close-icon.png')} style={styles.image} />
-    </TouchableOpacity>
+    <View style={styles.container}>
+      {(pathName === '/quiz' || pathName === '/word-search') && <QuizTimer />}
+      <TouchableOpacity onPressIn={handlePressIn} onPressOut={handlePressOut} activeOpacity={0.7}>
+        <Image source={require('@/assets/images/close-icon.png')} style={styles.image} />
+      </TouchableOpacity>
+    </View>
   )
 }
 
 const styles = StyleSheet.create({
+  container: {
+    flexDirection: 'row',
+    alignItems: 'center',
+    gap: 16,
+    backgroundColor: Colors.white,
+  },
   image: { width: 60, height: 60 },
 })

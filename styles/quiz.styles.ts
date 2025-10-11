@@ -23,6 +23,9 @@ export const quizScreenStyles = StyleSheet.create({
     color: Colors.scienceBlue,
     marginBottom: Spacing.md,
   },
+  egfrText: {
+    fontFamily: 'DMSans_700Bold_Italic',
+  },
   answersContainer: {
     marginBottom: Spacing.md,
   },

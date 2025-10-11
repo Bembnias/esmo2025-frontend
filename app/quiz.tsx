@@ -14,22 +14,16 @@ import Animated, { FadeInRight, FadeOutLeft } from 'react-native-reanimated'
 export default function QuizScreen() {
   const router = useRouter()
 
-  const { currentQuestionIndex, setCurrentQuestionIndex, addResult, setElapsedTime } = useQuiz()
+  const { currentQuestionIndex, setCurrentQuestionIndex, addResult, startTimer } = useQuiz()
   const [selectedAnswerId, setSelectedAnswerId] = useState<string | null>(null)
   const [isRevealed, setIsRevealed] = useState(false)
-  const [startTime] = useState(Date.now())
 
   const currentQuestion = QUIZ_QUESTIONS[currentQuestionIndex]
   const isLastQuestion = currentQuestionIndex === QUIZ_QUESTIONS.length - 1
 
   useEffect(() => {
-    // Timer starts when quiz screen mounts
-    return () => {
-      // Update elapsed time when unmounting
-      const elapsed = Math.floor((Date.now() - startTime) / 1000)
-      setElapsedTime(elapsed)
-    }
-  }, [startTime, setElapsedTime])
+    startTimer()
+  }, [startTimer])
 
   const handleReveal = () => {
     if (!selectedAnswerId) return
@@ -47,8 +41,6 @@ export default function QuizScreen() {
 
   const handleNext = () => {
     if (isLastQuestion) {
-      const elapsed = Math.floor((Date.now() - startTime) / 1000)
-      setElapsedTime(elapsed)
       router.push('/word-search' as Href)
     } else {
       setCurrentQuestionIndex(currentQuestionIndex + 1)
@@ -71,7 +63,14 @@ export default function QuizScreen() {
             exiting={FadeOutLeft.duration(300)}
             style={quizScreenStyles.card}
           >
-            <Text style={quizScreenStyles.questionText}>{currentQuestion.question}</Text>
+            <Text style={quizScreenStyles.questionText}>
+              {currentQuestion.question.split('EGFR').map((part, index, array) => (
+                <React.Fragment key={index}>
+                  {part}
+                  {index < array.length - 1 && <Text style={quizScreenStyles.egfrText}>EGFR</Text>}
+                </React.Fragment>
+              ))}
+            </Text>
 
             <View style={quizScreenStyles.answersContainer}>
               {currentQuestion.answers.map((answer) => (

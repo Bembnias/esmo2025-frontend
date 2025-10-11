@@ -19,7 +19,9 @@ export default function StartScreen() {
   return (
     <ScreenLayout>
       <View style={startScreenStyles.container}>
-        <Logo />
+        <View style={{ marginTop: -30, marginBottom: 35 }}>
+          <Logo />
+        </View>
         <Text style={startScreenStyles.title}>Ready for a{'\n'}Quick Challenge?</Text>
         <Separator />
         <Text style={startScreenStyles.subtitle}>

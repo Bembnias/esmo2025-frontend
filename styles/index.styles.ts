@@ -14,6 +14,7 @@ export const startScreenStyles = StyleSheet.create({
     fontSize: FontSizes.xxl * 2,
     color: Colors.scienceBlue,
     textAlign: 'center',
+    marginTop: Spacing.xxl,
     marginBottom: Spacing.sm,
     textTransform: 'uppercase',
   },
@@ -28,7 +29,7 @@ export const startScreenStyles = StyleSheet.create({
     fontSize: FontSizes.xl,
     color: Colors.scienceBlue,
     textAlign: 'center',
-    marginBottom: Spacing.md,
+    marginBottom: Spacing.xl + 5,
   },
   highlight: {
     color: Colors.scienceBlue,

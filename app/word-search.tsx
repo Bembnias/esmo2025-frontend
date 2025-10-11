@@ -18,7 +18,7 @@ interface CellPosition {
 
 export default function WordSearchScreen() {
   const router = useRouter()
-  const { setWordSearchCompleted, setFoundWords } = useQuiz()
+  const { setWordSearchCompleted, setFoundWords, stopTimer } = useQuiz()
 
   const [selectedCells, setSelectedCells] = useState<CellPosition[]>([])
   const [foundWordsLocal, setFoundWordsLocal] = useState<Word[]>([])
@@ -133,11 +133,13 @@ export default function WordSearchScreen() {
   }
 
   const handleSkip = () => {
+    stopTimer()
     setWordSearchCompleted(false)
     router.push('/form')
   }
 
   const handleNext = () => {
+    stopTimer()
     router.push('/form')
   }
 
@@ -149,6 +151,7 @@ export default function WordSearchScreen() {
     const styles = [wordSearchStyles.cell]
 
     if (isCellFound(row, col)) {
+      // @ts-ignore
       styles.push(wordSearchStyles.cellFound)
 
       // Count how many found words contain this cell
@@ -167,14 +170,19 @@ export default function WordSearchScreen() {
         const isVertical = word.positions.length > 1 && word.positions[0].col === word.positions[1].col
 
         if (isHorizontal) {
+          // @ts-ignore
           if (isFirstCell) styles.push(wordSearchStyles.cellRoundedLeft)
+          // @ts-ignore
           if (isLastCell) styles.push(wordSearchStyles.cellRoundedRight)
         } else if (isVertical) {
+          // @ts-ignore
           if (isFirstCell) styles.push(wordSearchStyles.cellRoundedTop)
+          // @ts-ignore
           if (isLastCell) styles.push(wordSearchStyles.cellRoundedBottom)
         }
       }
     } else if (isCellSelected(row, col)) {
+      // @ts-ignore
       styles.push(wordSearchStyles.cellSelected)
     }
 
@@ -264,10 +272,11 @@ export default function WordSearchScreen() {
       setHasWon(true)
       setShowVictoryModal(true)
       setWordSearchCompleted(true)
+      stopTimer() // Stop timer when user wins
       // Save found words to context
       setFoundWords(foundWordsLocal.map((word) => word.text))
     }
-  }, [foundWordsLocal, hasWon, setWordSearchCompleted, setFoundWords])
+  }, [foundWordsLocal, hasWon, setWordSearchCompleted, setFoundWords, stopTimer])
 
   return (
     <ScreenLayout>
@@ -328,8 +337,8 @@ export default function WordSearchScreen() {
             <View style={wordSearchStyles.modalButtonContainer}>
               <Button
                 onPress={() => {
-                  handleModalDismiss()
                   handleNext()
+                  handleModalDismiss()
                 }}
                 title='NEXT'
               />

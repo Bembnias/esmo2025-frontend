@@ -81,7 +81,7 @@ export const formScreenStyles = StyleSheet.create({
     fontFamily: 'DMSans_200ExtraLight_Italic',
     flex: 1,
     fontSize: FontSizes.sm,
-    color: Colors.black,
+    color: Colors.dataGray,
     lineHeight: 14,
   },
   footer: {
@@ -92,5 +92,10 @@ export const formScreenStyles = StyleSheet.create({
     alignItems: 'center',
     marginTop: Spacing.sm,
   },
-  floatingButton: { position: 'absolute', top: 40, right: 52, zIndex: 10 },
+  optional: {
+    fontFamily: 'DMSans_200ExtraLight_Italic',
+    marginLeft: 24,
+    color: Colors.dataGray,
+  },
+  floatingButton: { position: 'absolute', top: 0, right: 0, zIndex: 10 },
 })
