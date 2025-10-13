@@ -133,7 +133,9 @@ export default function FormScreen() {
         </View>
 
         <View style={formScreenStyles.card}>
-          <Text style={formScreenStyles.title}>Submit your details and help us donate{'\n'}to XYZ on your behalf</Text>
+          <Text style={formScreenStyles.title}>
+            Submit your details and help us donate{'\n'}to World CUP Alliance on your behalf
+          </Text>
 
           <View style={formScreenStyles.row}>
             <View style={formScreenStyles.inputContainer}>
