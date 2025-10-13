@@ -12,7 +12,7 @@ import { Text, View } from 'react-native'
 import { finalScreenStyles } from '../styles/final.styles'
 
 export default function FinalScreen() {
-  const { totalScore, results, formData, elapsedTime, foundWords } = useQuiz()
+  const { totalScore, results, formData, elapsedTime, foundWords, wordSearchCompleted } = useQuiz()
   const { submitData } = useDataSync()
   const hasSubmitted = useRef(false)
 
@@ -54,7 +54,7 @@ export default function FinalScreen() {
     router.push('/review')
   }
 
-  const isPerfectScore = totalScore === QUIZ_QUESTIONS.length + 1
+  const isPerfectScore = totalScore === (wordSearchCompleted ? QUIZ_QUESTIONS.length + 1 : QUIZ_QUESTIONS.length)
 
   return (
     <ScreenLayout>
@@ -64,7 +64,7 @@ export default function FinalScreen() {
           <View style={finalScreenStyles.scoreContainer}>
             <Text style={finalScreenStyles.scoreLabel}>Your score:</Text>
             <Text style={finalScreenStyles.score}>
-              {totalScore}/{QUIZ_QUESTIONS.length + 1}
+              {totalScore}/{wordSearchCompleted ? QUIZ_QUESTIONS.length + 1 : QUIZ_QUESTIONS.length}
             </Text>
           </View>
 

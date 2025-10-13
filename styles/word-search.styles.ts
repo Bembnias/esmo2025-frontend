@@ -9,10 +9,12 @@ export const wordSearchStyles = StyleSheet.create({
     flex: 1,
     paddingHorizontal: Spacing.xl,
     paddingVertical: Spacing.sm,
+    justifyContent: 'center',
   },
   header: {
     alignItems: 'flex-end',
-    marginBottom: Spacing.md,
+    marginTop: Spacing.sm,
+    marginBottom: Spacing.sm,
   },
   title: {
     fontFamily: 'DMSans_700Bold',
@@ -58,6 +60,12 @@ export const wordSearchStyles = StyleSheet.create({
     backgroundColor: Colors.white,
     position: 'relative',
     overflow: 'hidden',
+  },
+  cellSelecting: {
+    backgroundColor: 'transparent',
+    borderWidth: 0,
+    borderColor: Colors.scienceBlue,
+    borderRadius: 0,
   },
   cellSelected: {
     backgroundColor: Colors.scienceBlue,
