@@ -7,6 +7,13 @@ import { Logo } from '@/components/ui/logo'
 import { ScreenLayout } from '@/components/ui/screen-layout'
 import { LIQUID_BIOPSY_OPTIONS, SPECIALITY_OPTIONS } from '@/constants/form-options'
 import { useDonationForm } from '@/hooks/use-donation-form'
+import {
+  validateAffiliation,
+  validateAreaOfInterest,
+  validateEmail,
+  validateLocation,
+  validateName,
+} from '@/utils/form-validation'
 import React from 'react'
 import { ScrollView, Text, View } from 'react-native'
 import { formScreenStyles } from '../styles/form.styles'
@@ -56,7 +63,7 @@ export default function FormScreen() {
               placeholder='Name'
               rules={{
                 required: 'Name is required',
-                validate: (value: string) => value.trim().length > 0 || 'Name cannot be empty',
+                validate: validateName,
               }}
               errors={errors}
               onScrollToInput={scrollToInput}
@@ -68,7 +75,7 @@ export default function FormScreen() {
               placeholder='Surname'
               rules={{
                 required: 'Surname is required',
-                validate: (value: string) => value.trim().length > 0 || 'Surname cannot be empty',
+                validate: validateName,
               }}
               errors={errors}
               onScrollToInput={scrollToInput}
@@ -81,11 +88,7 @@ export default function FormScreen() {
             placeholder='Email'
             rules={{
               required: 'Email is required',
-              validate: (value: string) => value.trim().length > 0 || 'Email cannot be empty',
-              pattern: {
-                value: /^[A-Z0-9._%+-]+@[A-Z0-9.-]+\.[A-Z]{2,}$/i,
-                message: 'Invalid email address',
-              },
+              validate: validateEmail,
             }}
             errors={errors}
             onScrollToInput={scrollToInput}
@@ -102,7 +105,7 @@ export default function FormScreen() {
               placeholder='City'
               rules={{
                 required: 'City is required',
-                validate: (value: string) => value.trim().length > 0 || 'City cannot be empty',
+                validate: validateLocation,
               }}
               errors={errors}
               onScrollToInput={scrollToInput}
@@ -114,7 +117,7 @@ export default function FormScreen() {
               placeholder='Country'
               rules={{
                 required: 'Country is required',
-                validate: (value: string) => value.trim().length > 0 || 'Country cannot be empty',
+                validate: validateLocation,
               }}
               errors={errors}
               onScrollToInput={scrollToInput}
@@ -128,7 +131,7 @@ export default function FormScreen() {
               placeholder='Affiliation'
               rules={{
                 required: 'Affiliation is required',
-                validate: (value: string) => value.trim().length > 0 || 'Affiliation cannot be empty',
+                validate: validateAffiliation,
               }}
               errors={errors}
               onScrollToInput={scrollToInput}
@@ -138,6 +141,9 @@ export default function FormScreen() {
               control={control}
               name='areaOfInterest'
               placeholder='Area of interest*'
+              rules={{
+                validate: validateAreaOfInterest,
+              }}
               errors={errors}
               onScrollToInput={scrollToInput}
             />

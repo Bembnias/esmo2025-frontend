@@ -13,7 +13,7 @@ export default function StartScreen() {
 
   const handleStartQuiz = () => {
     resetQuiz()
-    router.push('/quiz')
+    router.push('/form')
   }
 
   return (

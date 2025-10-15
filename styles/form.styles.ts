@@ -5,7 +5,7 @@ export const formScreenStyles = StyleSheet.create({
   container: {
     flex: 1,
     paddingHorizontal: Spacing.xxl,
-    paddingVertical: Spacing.xl,
+    paddingVertical: Spacing.lg,
   },
   header: {
     alignItems: 'center',
@@ -14,7 +14,7 @@ export const formScreenStyles = StyleSheet.create({
   card: {
     backgroundColor: Colors.lightGray,
     borderRadius: BorderRadius.xl,
-    paddingVertical: Spacing.lg,
+    paddingVertical: Spacing.lg - 4,
     paddingHorizontal: Spacing.xxl,
     shadowColor: Colors.black,
     shadowOffset: { width: 0, height: 2 },
@@ -54,7 +54,8 @@ export const formScreenStyles = StyleSheet.create({
   errorText: {
     fontSize: FontSizes.sm - 2,
     color: Colors.bloodRed,
-    marginTop: 2,
+    marginTop: 1,
+    marginBottom: -9,
   },
   checkboxContainer: {
     flexDirection: 'row',
