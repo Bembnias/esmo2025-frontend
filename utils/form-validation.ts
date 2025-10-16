@@ -58,7 +58,6 @@ export const validateName = (value: string): string | boolean => {
 /**
  * Validates email field
  * - Must contain "@"
- * - Must end with .com
  * - Blocks disposable email domains
  * - Validates proper email format
  */
@@ -73,11 +72,6 @@ export const validateEmail = (value: string): string | boolean => {
   const emailPattern = /^[A-Z0-9._%+-]+@[A-Z0-9.-]+\.[A-Z]{2,}$/i
   if (!emailPattern.test(trimmedValue)) {
     return 'Invalid email address'
-  }
-
-  // Must end with .com
-  if (!trimmedValue.toLowerCase().endsWith('.com')) {
-    return 'Email must end with .com'
   }
 
   // Extract domain and check against disposable email list
