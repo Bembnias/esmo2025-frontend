@@ -1,7 +1,7 @@
 {
   "name": "esmo-2025",
   "main": "expo-router/entry",
-  "version": "1.0.0",
+  "version": "1.0.1",
   "author": {
     "name": "Mateusz Bienias",
     "email": "bieniasdevs@gmail.com",
