@@ -14,7 +14,7 @@ interface FormCheckboxProps {
   children: React.ReactNode
 }
 
-export function FormCheckbox({ control, name, rules, children }: FormCheckboxProps) {
+function FormCheckbox({ control, name, rules, children }: FormCheckboxProps) {
   return (
     <Controller
       control={control}

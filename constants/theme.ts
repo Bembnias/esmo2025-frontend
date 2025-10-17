@@ -12,8 +12,6 @@ export const Colors = {
   bloodRed: '#ea1d23',
 }
 
-export const GRADIENT_FRAME_COLORS = [Colors.bloodRed, Colors.scienceBlue, Colors.lightBlue, Colors.bloodRed]
-
 export const Spacing = {
   xs: 8,
   sm: 16,
