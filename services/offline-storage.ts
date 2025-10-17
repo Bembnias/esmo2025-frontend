@@ -19,13 +19,6 @@ export const savePendingSubmission = async (data: QuizSubmissionData): Promise<v
     // Get existing pending submissions
     const existing = await getPendingSubmissions()
 
-    // Check if submission with same email already exists (deduplicate)
-    const duplicate = existing.find((sub) => sub.data.email === data.email)
-    if (duplicate) {
-      console.log('Pending submission with this email already exists, skipping:', data.email)
-      return
-    }
-
     // Generate a unique UUID
     const id = Crypto.randomUUID()
 

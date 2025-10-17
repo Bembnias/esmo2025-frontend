@@ -24,16 +24,23 @@ export interface QuizSubmissionData {
 }
 
 const API_URL = `${config.apiUrl}/quiz-results`
+const TIMEOUT_MS = 15000 // 15 seconds timeout
 
 export const submitQuizResults = async (data: QuizSubmissionData): Promise<boolean> => {
   try {
+    const controller = new AbortController()
+    const timeoutId = setTimeout(() => controller.abort(), TIMEOUT_MS)
+
     const response = await fetch(API_URL, {
       method: 'POST',
       headers: {
         'Content-Type': 'application/json',
       },
       body: data ? JSON.stringify(data) : null,
+      signal: controller.signal,
     })
+
+    clearTimeout(timeoutId)
 
     if (response.status === 429) {
       // Rate limited - submission was already received
@@ -46,7 +53,10 @@ export const submitQuizResults = async (data: QuizSubmissionData): Promise<boole
     }
 
     return true
-  } catch {
+  } catch (error) {
+    if (error instanceof Error && error.name === 'AbortError') {
+      console.log('Request timed out after', TIMEOUT_MS, 'ms')
+    }
     return false
   }
 }

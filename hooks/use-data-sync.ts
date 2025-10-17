@@ -13,14 +13,20 @@ const MAX_RETRIES = 3
 export const useDataSync = () => {
   const [isOnline, setIsOnline] = useState(true)
   const [isSyncing, setIsSyncing] = useState(false)
-  const hasInitialSyncRun = useRef(false)
+  const previousOnlineStatus = useRef(true)
   const submissionInProgress = useRef(false)
 
   /**
    * Sync all pending submissions to the server
    */
   const syncPendingSubmissions = useCallback(async (): Promise<void> => {
-    if (isSyncing || !isOnline) {
+    if (isSyncing) {
+      console.log('Sync already in progress, skipping...')
+      return
+    }
+
+    if (!isOnline) {
+      console.log('Device is offline, cannot sync')
       return
     }
 
@@ -84,21 +90,22 @@ export const useDataSync = () => {
     }
   }, [])
 
-  // Sync pending submissions when coming online (only once per online state change)
+  // Sync pending submissions when coming online
   useEffect(() => {
-    if (isOnline && !hasInitialSyncRun.current) {
-      hasInitialSyncRun.current = true
+    // If we just came back online (transition from offline to online)
+    if (isOnline && !previousOnlineStatus.current) {
+      console.log('Device came back online, triggering sync...')
       syncPendingSubmissions()
     }
 
-    if (!isOnline) {
-      hasInitialSyncRun.current = false
-    }
+    // Update the previous status
+    previousOnlineStatus.current = isOnline
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [isOnline])
 
   /**
    * Submit quiz data - tries to send immediately if online, saves locally if offline
+   * IMPORTANT: Always syncs pending submissions first before submitting new data
    */
   const submitData = async (data: QuizSubmissionData): Promise<boolean> => {
     // Prevent concurrent submissions
@@ -111,7 +118,11 @@ export const useDataSync = () => {
 
     try {
       if (isOnline) {
-        // Try to submit directly
+        // First, try to sync any pending submissions before submitting new data
+        console.log('Checking for pending submissions before submitting new data...')
+        await syncPendingSubmissions()
+
+        // Then try to submit the new data directly
         const success = await submitQuizResults(data)
 
         if (success) {
